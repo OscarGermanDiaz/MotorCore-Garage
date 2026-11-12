@@ -1,0 +1,94 @@
+# ============================================================
+# .NET / MAUI - archivos generados por compilación
+# ============================================================
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+*.binlog
+*.suo
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.nuget.props
+*.nuget.targets
+
+# Resultados de pruebas y cobertura
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.trx
+*.coverage
+*.coveragexml
+coverage*/
+TestResults/
+
+# Herramientas de análisis y caché de ReSharper / Rider
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+.idea/
+
+# Visual Studio: caché local y archivos de usuario
+.vs/
+*.vsp
+*.vspx
+*.vsix
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# ============================================================
+# Android / iOS / MacCatalyst / Windows (MAUI)
+# ============================================================
+# Keystores y credenciales de firma: nunca subirlos
+*.keystore
+*.jks
+*.p12
+*.mobileprovision
+*.pfx
+*.snk
+*.cer
+*.pem
+google-services.json
+GoogleService-Info.plist
+
+# Paquetes de publicación
+*.apk
+*.aab
+*.ipa
+*.app
+*.appx
+*.appxbundle
+*.msix
+*.msixbundle
+AppPackages/
+BundleArtifacts/
+PublishProfiles/
+
+# Variables de entorno y secretos
+.env
+.env.*
+!.env.example
+secrets.json
+appsettings.*.json
+!appsettings.json
+
+# ============================================================
+# Sistema operativo y editores
+# ============================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~

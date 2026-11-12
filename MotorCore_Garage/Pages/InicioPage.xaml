@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MotorCore_Garage.Pages.InicioPage"
+             Title="Inicio"
+             Style="{StaticResource Pagina}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24,48,24,24" Spacing="16">
+
+            <Label Text="Buen día, Taller Central" Style="{StaticResource Pie}" />
+            <Label Text="Inicio" Style="{StaticResource Titulo}" />
+
+            <Border BackgroundColor="{StaticResource Primary}"
+                    Padding="20" StrokeThickness="0"
+                    StrokeShape="RoundRectangle 20">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Salud de la flota" Style="{StaticResource Pie}" TextColor="{StaticResource White}" />
+                    <Label Text="86%" Style="{StaticResource Display}" />
+                    <Label Text="12 vehículos · 3 requieren atención" FontSize="15" TextColor="{StaticResource Secondary}" />
+                    <ProgressBar Progress="0.86"
+                                 ProgressColor="{StaticResource White}"
+                                 HeightRequest="8" Margin="0,4,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Alertas predictivas" Style="{StaticResource Seccion}" />
+
+            <VerticalStackLayout x:Name="ListaAlertas" Spacing="12" />
+
+            <Label Text="Próximos servicios" Style="{StaticResource Seccion}" />
+
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Cambio de aceite · Hilux" Style="{StaticResource CuerpoStrong}" />
+                    <Label Text="Mañana, 09:00" Style="{StaticResource Pie}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Revisión general · Ranger" Style="{StaticResource CuerpoStrong}" />
+                    <Label Text="Vie 14, 11:30" Style="{StaticResource Pie}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Button Text="Programar servicio" Style="{StaticResource BotonPrimario}" Margin="0,8,0,0" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
