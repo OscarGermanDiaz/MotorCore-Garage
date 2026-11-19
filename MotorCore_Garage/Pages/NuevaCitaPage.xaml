@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MotorCore_Garage.Pages.NuevaCitaPage"
+             Title="Nueva cita"
+             Style="{StaticResource Pagina}">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <Grid Grid.Row="0" BackgroundColor="{StaticResource Graphite}" Padding="8,44,16,12" ColumnDefinitions="Auto,*">
+            <Button Text="‹" FontSize="24" BackgroundColor="Transparent" TextColor="{StaticResource White}"
+                    WidthRequest="48" HeightRequest="48" Padding="0" Clicked="OnVolver" />
+            <Label Grid.Column="1" Text="Nueva cita" Style="{StaticResource Seccion}" TextColor="{StaticResource White}" VerticalOptions="Center" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,16,16,24" Spacing="10">
+
+                <Label Text="Cliente" Style="{StaticResource Etiqueta}" />
+                <Picker x:Name="Cliente" Title="Selecciona un cliente" SelectedIndexChanged="OnCliente" FontSize="16" HeightRequest="56" />
+                <Label x:Name="ErrorCliente" Style="{StaticResource Pie}" TextColor="{StaticResource WearDue}" IsVisible="False" />
+
+                <Label Text="Vehículo" Style="{StaticResource Etiqueta}" />
+                <Picker x:Name="Vehiculo" Title="Primero elige un cliente" FontSize="16" HeightRequest="56" />
+                <Label x:Name="ErrorVehiculo" Style="{StaticResource Pie}" TextColor="{StaticResource WearDue}" IsVisible="False" />
+
+                <Label Text="Tipo de servicio" Style="{StaticResource Etiqueta}" />
+                <Picker x:Name="Servicio" Title="Selecciona el servicio" FontSize="16" HeightRequest="56" />
+                <Label x:Name="ErrorServicio" Style="{StaticResource Pie}" TextColor="{StaticResource WearDue}" IsVisible="False" />
+
+                <Label Text="Fecha" Style="{StaticResource Etiqueta}" />
+                <DatePicker x:Name="Fecha" FontSize="16" HeightRequest="56" DateSelected="OnFecha" />
+
+                <Label Text="Turno disponible" Style="{StaticResource Etiqueta}" />
+                <Grid x:Name="Horarios" ColumnDefinitions="*,*,*,*" ColumnSpacing="8" RowSpacing="8" />
+                <Label Text="Los turnos llenos aparecen deshabilitados" Style="{StaticResource Pie}" />
+                <Label x:Name="ErrorHora" Style="{StaticResource Pie}" TextColor="{StaticResource WearDue}" IsVisible="False" />
+
+                <Label Text="Prioridad" Style="{StaticResource Etiqueta}" />
+                <Picker x:Name="Prioridad" FontSize="16" HeightRequest="56" />
+
+                <Button Text="Confirmar cita" Style="{StaticResource BotonPrimario}" Margin="0,16,0,0" Clicked="OnConfirmar" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Border Grid.Row="1" x:Name="Snack" IsVisible="False" BackgroundColor="{StaticResource Graphite}"
+                StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,12"
+                Margin="16" VerticalOptions="End">
+            <Label x:Name="SnackTexto" TextColor="{StaticResource White}" FontSize="14" />
+        </Border>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MotorCore_Garage.Pages.RegistrarServicioPage"
+             Title="Registrar servicio"
+             Style="{StaticResource Pagina}">
+
+    <Grid RowDefinitions="Auto,*">
+        <Grid Grid.Row="0" BackgroundColor="{StaticResource Graphite}" Padding="8,44,16,12" ColumnDefinitions="Auto,*">
+            <Button Text="‹" FontSize="24" BackgroundColor="Transparent" TextColor="{StaticResource White}"
+                    WidthRequest="48" HeightRequest="48" Padding="0" Clicked="OnVolver" />
+            <Label Grid.Column="1" Text="Registrar servicio" Style="{StaticResource Seccion}" TextColor="{StaticResource White}" VerticalOptions="Center" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,16,16,24" Spacing="12">
+
+                <Border Style="{StaticResource Tarjeta}" Padding="16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Vehículo" Style="{StaticResource CuerpoStrong}" />
+                        <Picker x:Name="VehiculoPicker" Title="Selecciona el vehículo" FontSize="16" HeightRequest="52"
+                                SelectedIndexChanged="OnVehiculo" />
+                        <Label x:Name="UltimoKm" Style="{StaticResource Pie}" FontSize="14" />
+
+                        <Label Text="Fecha del servicio" Style="{StaticResource Etiqueta}" />
+                        <DatePicker x:Name="Fecha" Format="dd/MM/yyyy" FontSize="16" />
+
+                        <Label Text="Kilometraje del servicio" Style="{StaticResource Etiqueta}" />
+                        <Entry x:Name="Km" Style="{StaticResource Campo}" Keyboard="Numeric" Placeholder="0" FontSize="28" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Tarjeta}" Padding="16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Trabajo realizado" Style="{StaticResource CuerpoStrong}" />
+                        <Entry x:Name="Trabajo" Style="{StaticResource Campo}" Placeholder="Ej. Cambio de aceite 5W-30" ReturnType="Next" />
+
+                        <Label Text="Componentes atendidos" Style="{StaticResource Etiqueta}" />
+                        <VerticalStackLayout x:Name="ListaComponentes" Spacing="6" />
+                        <Label x:Name="Efecto" Style="{StaticResource Pie}" FontSize="13" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Tarjeta}" Padding="16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Costo y responsable" Style="{StaticResource CuerpoStrong}" />
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <VerticalStackLayout Spacing="8">
+                                <Label Text="Costo (MXN)" Style="{StaticResource Etiqueta}" />
+                                <Entry x:Name="Costo" Style="{StaticResource Campo}" Keyboard="Numeric" Placeholder="0.00" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="8">
+                                <Label Text="Mecánico" Style="{StaticResource Etiqueta}" />
+                                <Entry x:Name="Mecanico" Style="{StaticResource Campo}" Placeholder="Nombre" />
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <Label Text="Observaciones" Style="{StaticResource Etiqueta}" />
+                        <Editor x:Name="Observaciones" Placeholder="Piezas cambiadas, estado general, recomendaciones…"
+                                AutoSize="TextChanges" MinimumHeightRequest="80" FontSize="15" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label x:Name="Error" TextColor="{StaticResource WearDue}" FontSize="14" IsVisible="False" />
+                <Button Text="Guardar servicio" Style="{StaticResource BotonPrimario}" Clicked="OnGuardar" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

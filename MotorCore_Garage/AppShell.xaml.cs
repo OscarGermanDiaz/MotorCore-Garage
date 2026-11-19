@@ -1,13 +1,11 @@
-﻿using MotorCore_Garage.Pages;
-
 namespace MotorCore_Garage
 {
+    // Versión de monitoreo (administrador y mecánico).
     public partial class AppShell : Shell
     {
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute("detalle", typeof(DetallePage));
         }
     }
 }

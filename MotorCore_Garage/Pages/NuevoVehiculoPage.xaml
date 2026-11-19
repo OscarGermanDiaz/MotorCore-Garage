@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MotorCore_Garage.Pages.NuevoVehiculoPage"
+             Title="Nuevo vehículo"
+             Style="{StaticResource Pagina}">
+
+    <Grid RowDefinitions="Auto,*">
+        <Grid Grid.Row="0" BackgroundColor="{StaticResource Graphite}" Padding="8,44,16,12" ColumnDefinitions="Auto,*">
+            <Button Text="‹" FontSize="24" BackgroundColor="Transparent" TextColor="{StaticResource White}"
+                    WidthRequest="48" HeightRequest="48" Padding="0" Clicked="OnVolver" />
+            <Label Grid.Column="1" Text="Nuevo vehículo" Style="{StaticResource Seccion}" TextColor="{StaticResource White}" VerticalOptions="Center" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,16,16,24" Spacing="12">
+                <Border Style="{StaticResource Tarjeta}" Padding="16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Propietario" Style="{StaticResource CuerpoStrong}" />
+                        <Picker x:Name="ClientePicker" Title="Selecciona el cliente" FontSize="16" HeightRequest="52" />
+
+                        <Label Text="Identificación" Style="{StaticResource CuerpoStrong}" Margin="0,8,0,0" />
+                        <Label Text="Placa" Style="{StaticResource Etiqueta}" />
+                        <Entry x:Name="Placa" Style="{StaticResource Campo}" Placeholder="ABC-12-34" MaxLength="15" ReturnType="Next" />
+
+                        <Label Text="Marca" Style="{StaticResource Etiqueta}" />
+                        <Entry x:Name="Marca" Style="{StaticResource Campo}" Placeholder="Ej. Nissan" ReturnType="Next" />
+
+                        <Label Text="Modelo" Style="{StaticResource Etiqueta}" />
+                        <Entry x:Name="Modelo" Style="{StaticResource Campo}" Placeholder="Ej. Versa" ReturnType="Next" />
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <VerticalStackLayout Spacing="8">
+                                <Label Text="Año" Style="{StaticResource Etiqueta}" />
+                                <Entry x:Name="Anio" Style="{StaticResource Campo}" Keyboard="Numeric" MaxLength="4" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="8">
+                                <Label Text="Kilometraje actual" Style="{StaticResource Etiqueta}" />
+                                <Entry x:Name="Km" Style="{StaticResource Campo}" Keyboard="Numeric" Placeholder="0" />
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <Label Text="VIN (opcional)" Style="{StaticResource Etiqueta}" />
+                        <Entry x:Name="Vin" Style="{StaticResource Campo}" MaxLength="40" ReturnType="Done" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="Al registrarlo, los componentes se consideran revisados desde este kilometraje. Los servicios posteriores actualizan los intervalos."
+                       Style="{StaticResource Pie}" />
+
+                <Label x:Name="Error" TextColor="{StaticResource WearDue}" FontSize="14" IsVisible="False" />
+                <Button Text="Guardar vehículo" Style="{StaticResource BotonPrimario}" Clicked="OnGuardar" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

@@ -4,16 +4,18 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="clr-namespace:MotorCore_Garage.Pages"
-    Title="MotorCore Garage"
+    xmlns:mi="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
+    Title="MotorCode Garage"
     Shell.FlyoutBehavior="Disabled"
-    Shell.TabBarBackgroundColor="{StaticResource White}"
+    Shell.TabBarBackgroundColor="{AppThemeBinding Light={StaticResource Card}, Dark={StaticResource CardDark}}"
     Shell.TabBarForegroundColor="{StaticResource Primary}"
-    Shell.TabBarUnselectedColor="{StaticResource Gray500}">
+    Shell.TabBarUnselectedColor="{StaticResource InkMuted}">
 
     <TabBar>
-        <ShellContent Title="Inicio" Route="inicio" ContentTemplate="{DataTemplate pages:InicioPage}" />
-        <ShellContent Title="Vehículos" Route="vehiculos" ContentTemplate="{DataTemplate pages:VehiculosPage}" />
-        <ShellContent Title="Órdenes" Route="ordenes" ContentTemplate="{DataTemplate pages:OrdenesPage}" />
-        <ShellContent Title="Alertas" Route="alertas" ContentTemplate="{DataTemplate pages:AlertasPage}" />
+        <ShellContent Title="Inicio" Route="inicio" Icon="{mi:Material Icon=Home, IconColor=#8A9199, IconSize=24}" ContentTemplate="{DataTemplate pages:InicioPage}" />
+        <ShellContent Title="Agenda" Route="agenda" Icon="{mi:Material Icon=CalendarMonth, IconColor=#8A9199, IconSize=24}" ContentTemplate="{DataTemplate pages:AgendaPage}" />
+        <ShellContent Title="Vehículos" Route="vehiculos" Icon="{mi:Material Icon=DirectionsCar, IconColor=#8A9199, IconSize=24}" ContentTemplate="{DataTemplate pages:VehiculosPage}" />
+        <ShellContent Title="Alertas" Route="alertas" Icon="{mi:Material Icon=NotificationsNone, IconColor=#8A9199, IconSize=24}" ContentTemplate="{DataTemplate pages:AlertasPage}" />
+        <ShellContent Title="Más" Route="mas" Icon="{mi:Material Icon=MoreHoriz, IconColor=#8A9199, IconSize=24}" ContentTemplate="{DataTemplate pages:MasPage}" />
     </TabBar>
 </Shell>

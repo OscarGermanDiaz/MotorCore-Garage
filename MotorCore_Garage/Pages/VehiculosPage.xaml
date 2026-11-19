@@ -5,29 +5,26 @@
              Title="Vehículos"
              Style="{StaticResource Pagina}">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="24,48,24,24" Spacing="16">
+    <Grid RowDefinitions="Auto,Auto,*">
 
-            <Label Text="Mi flota" Style="{StaticResource Pie}" />
-            <Label Text="Vehículos" Style="{StaticResource Titulo}" />
-
-            <Border Style="{StaticResource Tarjeta}" Padding="16,12">
-                <Entry Placeholder="Buscar por placa o modelo" />
+        <Grid Grid.Row="0" BackgroundColor="{StaticResource Graphite}" Padding="16,44,16,12" ColumnDefinitions="*,Auto">
+            <Label Text="Vehículos" Style="{StaticResource Seccion}" TextColor="{StaticResource White}" VerticalOptions="Center" />
+            <Border Grid.Column="1" BackgroundColor="{StaticResource Card}" Style="{StaticResource Chip}" VerticalOptions="Center">
+                <Label Text="☁ Modo local" FontFamily="OpenSansSemibold" FontSize="12" TextColor="{StaticResource Ink}" />
             </Border>
+        </Grid>
 
-            <HorizontalStackLayout Spacing="8">
-                <Border BackgroundColor="{StaticResource Primary}" Style="{StaticResource Chip}">
-                    <Label Text="Todos" Style="{StaticResource Etiqueta}" TextColor="{StaticResource White}" />
-                </Border>
-                <Border BackgroundColor="{StaticResource Gray100}" Style="{StaticResource Chip}">
-                    <Label Text="Atención" Style="{StaticResource Etiqueta}" />
-                </Border>
-                <Border BackgroundColor="{StaticResource Gray100}" Style="{StaticResource Chip}">
-                    <Label Text="Al día" Style="{StaticResource Etiqueta}" />
-                </Border>
-            </HorizontalStackLayout>
-
-            <VerticalStackLayout x:Name="ListaVehiculos" Spacing="12" />
+        <VerticalStackLayout Grid.Row="1" Padding="16,12,16,0" Spacing="10">
+            <Border Style="{StaticResource Tarjeta}" Padding="12,4">
+                <Entry x:Name="Buscar" Placeholder="Buscar por placa o modelo" FontSize="16"
+                       TextChanged="OnFiltrar" ClearButtonVisibility="WhileEditing" />
+            </Border>
+            <Picker x:Name="FiltroEstado" Title="Filtrar por estado de desgaste" FontSize="16" HeightRequest="48"
+                    SelectedIndexChanged="OnFiltrar" />
         </VerticalStackLayout>
-    </ScrollView>
+
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout x:Name="Lista" Padding="16,12,16,96" Spacing="12" />
+        </ScrollView>
+    </Grid>
 </ContentPage>

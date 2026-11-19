@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MotorCore_Garage.Pages.AgendaPage"
+             Title="Agenda"
+             Style="{StaticResource Pagina}">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <Grid Grid.Row="0" BackgroundColor="{StaticResource Graphite}" Padding="16,44,16,12" ColumnDefinitions="*,Auto">
+            <Label Text="Agenda" Style="{StaticResource Seccion}" TextColor="{StaticResource White}" VerticalOptions="Center" />
+            <Border Grid.Column="1" BackgroundColor="{StaticResource Card}" Style="{StaticResource Chip}" VerticalOptions="Center">
+                <Label Text="☁ Modo local" FontFamily="OpenSansSemibold" FontSize="12" TextColor="{StaticResource Ink}" />
+            </Border>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,12,16,96" Spacing="16">
+
+                <!-- Vista semanal: el punto indica la saturación de cada día -->
+                <Grid x:Name="Semana" ColumnDefinitions="*,*,*,*,*,*,*" ColumnSpacing="4" />
+
+                <Label x:Name="Titulo" Style="{StaticResource Seccion}" />
+
+                <HorizontalStackLayout Spacing="8">
+                    <Label Text="Saturación del día" Style="{StaticResource CuerpoStrong}" VerticalOptions="Center" />
+                    <Border x:Name="Saturacion" Style="{StaticResource Chip}" />
+                </HorizontalStackLayout>
+
+                <!-- Vista por día: bloques de horario -->
+                <VerticalStackLayout x:Name="Bloques" Spacing="10" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button Grid.Row="1" Text="+" FontSize="28" FontFamily="OpenSansSemibold"
+                BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource White}"
+                CornerRadius="16" WidthRequest="56" HeightRequest="56" Padding="0"
+                HorizontalOptions="End" VerticalOptions="End" Margin="16"
+                Clicked="OnNuevaCita" />
+    </Grid>
+</ContentPage>

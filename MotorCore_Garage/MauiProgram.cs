@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using MauiIcons.FontAwesome.Brand;
+using MauiIcons.Material;
 
 namespace MotorCore_Garage
 {
@@ -9,6 +11,8 @@ namespace MotorCore_Garage
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMaterialMauiIcons()
+                .UseFontAwesomeBrandMauiIcons()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

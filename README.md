@@ -1,23 +1,24 @@
 # MotorCore Garage
 
-Sistema predictivo y de gestión de mantenimiento automotriz para talleres.
+Sistema de gestión de mantenimiento automotriz para talleres. Lleva el control de los clientes, sus vehículos y los servicios realizados, y calcula cuándo toca cada mantenimiento según el kilometraje.
 
-MotorCore Garage permite llevar el control de la flota de vehículos de un taller, anticipar fallas de componentes mediante alertas predictivas, y gestionar las órdenes de trabajo y los servicios programados.
+La app funciona **sin conexión**: todos los datos se guardan en una base de datos SQLite dentro del teléfono.
 
-> **Estado del proyecto:** prototipo de interfaz. La navegación y la UI están implementadas con datos de demostración (sin persistencia ni conexión a servicios externos). Ver [Estado actual y hoja de ruta](#estado-actual-y-hoja-de-ruta).
+> **Estado del proyecto:** primera versión funcional en modo local. Incluye registro inicial, inicio de sesión, alta de clientes, vehículos y servicios, agenda y alertas de mantenimiento. Ver [Estado actual y hoja de ruta](#estado-actual-y-hoja-de-ruta).
 
 ---
 
 ## Tabla de contenidos
 
 - [Funcionalidades](#funcionalidades)
-- [Capturas](#capturas)
 - [Tecnologías](#tecnologías)
 - [Requisitos](#requisitos)
 - [Instalación y ejecución](#instalación-y-ejecución)
+- [Primer uso](#primer-uso)
+- [Base de datos](#base-de-datos)
 - [Estructura del proyecto](#estructura-del-proyecto)
+- [Cálculo de desgaste y alertas](#cálculo-de-desgaste-y-alertas)
 - [Sistema de diseño](#sistema-de-diseño)
-- [Datos de demostración](#datos-de-demostración)
 - [Estado actual y hoja de ruta](#estado-actual-y-hoja-de-ruta)
 - [Contribuir](#contribuir)
 - [Licencia](#licencia)
@@ -26,42 +27,36 @@ MotorCore Garage permite llevar el control de la flota de vehículos de un talle
 
 ## Funcionalidades
 
-La aplicación tiene cuatro secciones principales, accesibles desde la barra de pestañas inferior.
+La navegación principal está en la barra de pestañas inferior.
+
+### Acceso
+- **Registro inicial:** en el primer uso se crea el taller (nombre) y la cuenta de administrador (usuario y contraseña de al menos 6 caracteres). Entra directamente a la app.
+- **Inicio de sesión:** usuario y contraseña. Las contraseñas se guardan con PBKDF2-SHA256 y sal, nunca en texto plano.
 
 ### Inicio
-- Resumen de la **salud de la flota** con porcentaje global y barra de progreso.
-- Lista de **alertas predictivas** con prioridad (Alta, Media, Baja).
-- Próximos **servicios programados**.
-- Botón para programar un servicio.
+- Saludo, fecha y resumen del día: citas de hoy, vehículos en taller, alertas urgentes y ocupación de bahías.
+- Citas del día y las alertas de mantenimiento más importantes.
+- Botón **+** con acciones rápidas: nuevo cliente, nuevo vehículo, registrar servicio, nueva cita, recepción de vehículo y registrar kilometraje.
 
-### Vehículos
-- Listado de la flota con placa, modelo, kilometraje, estado y salud (%).
-- Indicador de color según el estado: *Al día* (verde), *Atención* (amarillo), *Crítico* (rojo).
-- Filtros por estado (*Todos*, *Atención*, *Al día*) y campo de búsqueda por placa o modelo.
-- Al tocar un vehículo se abre su **detalle**.
+### Clientes y vehículos
+- **Nuevo cliente:** nombre y teléfono (10 dígitos). Al guardar, ofrece registrar de inmediato un vehículo de ese cliente.
+- **Nuevo vehículo:** cliente propietario, placa (única), marca, modelo, año, kilometraje actual y VIN opcional.
+- **Vehículos:** listado con filtro por estado de desgaste y búsqueda por placa o modelo.
+- **Expediente del vehículo:** estado de cada componente, historial de servicios, kilometraje en el tiempo, notas y acceso para registrar kilometraje o servicios.
+- **Clientes:** búsqueda por nombre, teléfono o placa, y detalle con sus vehículos.
 
-### Detalle del vehículo
-- Kilometraje, salud general y próximo servicio.
-- **Predicción de desgaste** por componente (frenos, aceite, batería, neumáticos) con porcentaje de vida útil restante.
-- Recomendación del sistema para el vehículo.
-- Botón para programar un servicio.
+### Servicios y kilometraje
+- **Registrar servicio:** vehículo, fecha, kilometraje, trabajo realizado, componentes atendidos, costo, mecánico y observaciones. Los componentes marcados reinician su contador de desgaste.
+- **Registrar kilometraje:** muestra cómo cambiarán las alertas antes de guardar. El kilometraje no puede bajar.
 
-### Órdenes
-- Órdenes de trabajo con identificador (OT-xxxx), descripción, estado (*Pendiente*, *En curso*, *Completada*) y técnico asignado.
-- Pestañas de estado: *Abiertas*, *En curso*, *Cerradas*.
+### Agenda y recepción
+- Agenda semanal con citas por horario y por bahía.
+- **Nueva cita:** cliente, vehículo, tipo de servicio, prioridad y horario disponible.
+- **Recepción:** cambia el estado de la cita (recibido, en proceso, etc.).
 
-### Alertas
-- Lista completa de alertas predictivas con el componente, el vehículo, el detalle de la predicción y su prioridad.
-
----
-
-## Capturas
-
-<!-- Agrega aquí capturas de pantalla de cada sección, por ejemplo:
-![Inicio](docs/img/inicio.png)
-![Vehículos](docs/img/vehiculos.png)
--->
-Pendiente: agregar capturas en `docs/img/`.
+### Alertas y reportes
+- Alertas agrupadas en vencidas, próximas y programadas (cuando ya hay una cita para ese vehículo).
+- **Más:** configuración de bahías, intervalos del catálogo de componentes, bitácora, respaldo en JSON y cierre de sesión. Los reportes son para administradores.
 
 ---
 
@@ -72,7 +67,9 @@ Pendiente: agregar capturas en `docs/img/`.
 | Framework | [.NET MAUI](https://dotnet.microsoft.com/apps/maui) sobre .NET 10 |
 | Lenguaje | C# (nullable habilitado, implicit usings) |
 | UI | XAML con compilación en tiempo de build (`MauiXamlInflator=SourceGen`) |
-| Navegación | Shell (`TabBar` + navegación por ruta `detalle`) |
+| Navegación | Shell (`TabBar` + rutas registradas en `AppShell.xaml.cs`) |
+| Base de datos | SQLite local con [sqlite-net-pcl](https://github.com/praeclarum/sqlite-net) y `SQLitePCLRaw.bundle_e_sqlite3` |
+| Seguridad | PBKDF2-SHA256 para contraseñas (`System.Security.Cryptography`) |
 | Tipografía | Open Sans (Regular y Semibold) |
 | Plataformas | Android (API 21+), iOS y Mac Catalyst (15.0+), Windows (10.0.17763+) |
 
@@ -86,7 +83,7 @@ Pendiente: agregar capturas en `docs/img/`.
   dotnet workload install maui
   ```
   En Linux solo se puede compilar el target de Android. Para iOS / Mac Catalyst se requiere macOS con Xcode, y para Windows, Windows con el SDK de Windows 10/11.
-- **Android:** Android SDK (instalado automáticamente por Visual Studio o por `dotnet workload`) y un emulador o dispositivo con depuración USB.
+- **Android:** Android SDK (instalado por Visual Studio o por `dotnet workload`) y un emulador o dispositivo con depuración USB.
 - **Visual Studio 2022** con la carga de trabajo *Desarrollo de .NET Multiplataforma con la interfaz de usuario de la aplicación* (.NET MAUI), o **Visual Studio Code** con la extensión *C# Dev Kit*.
 
 ---
@@ -117,9 +114,41 @@ Pendiente: agregar capturas en `docs/img/`.
 
 4. Alternativamente, abre `MotorCore_Garage.slnx` en Visual Studio, selecciona el dispositivo de destino y presiona **F5**.
 
-### Compilar para todas las plataformas
+En Windows el `.csproj` incluye los targets de Windows; en macOS, los de iOS y Mac Catalyst; en Linux, solo Android. Para forzar un target usa `-f <tfm>`.
 
-En Windows, el `.csproj` incluye automáticamente los targets de Windows; en macOS, los de iOS y Mac Catalyst; en Linux, solo Android. Para forzar un target específico usa `-f <tfm>`.
+---
+
+## Primer uso
+
+1. Al abrir la app por primera vez aparece **Registra tu taller**. Escribe el nombre del taller y crea el usuario administrador.
+2. La app entra directamente al inicio con esa sesión.
+3. Después de cerrar sesión (*Más → Cerrar sesión*), el acceso será con **Iniciar sesión**.
+4. Para empezar a trabajar: registra un **cliente**, luego su **vehículo**, y después un **servicio** para cada vehículo.
+
+Los datos quedan en el teléfono. Desinstalar la app o borrar sus datos elimina la base de datos.
+
+---
+
+## Base de datos
+
+- **Archivo:** `motorcore.db3`, en el almacenamiento privado de la app (`FileSystem.AppDataDirectory`).
+- **Creación:** las tablas se crean automáticamente en `MotorCore_Garage/Services/Db.cs` la primera vez que se usa la base de datos.
+- **Esquema documentado:** [`schema/MotorCodeGarageDB.sql`](schema/MotorCodeGarageDB.sql). Es el mismo esquema que crea la app; puede ejecutarse con `sqlite3 motorcore.db3 < schema/MotorCodeGarageDB.sql` para una base nueva.
+- **Acceso desde código:** la clase `Taller` (`Services/Taller.cs`) carga las tablas en memoria al arrancar y escribe cada cambio en la base de datos. Las páginas no hablan con SQLite directamente.
+
+| Tabla | Contenido |
+|---|---|
+| `Usuarios` | Cuentas de acceso (usuario, hash de contraseña, rol) |
+| `Configuracion` | Nombre del taller y número de bahías |
+| `Clientes` | Nombre y teléfono de cada cliente |
+| `Vehiculos` | Datos del vehículo, propietario y kilometraje actual |
+| `ComponenteUltimo` | Kilometraje del último servicio por componente y vehículo |
+| `ComponentesCatalogo` | Componentes y su intervalo de servicio en km |
+| `Citas` | Agenda de servicios |
+| `HistorialServicios` | Servicios realizados |
+| `Bitacora` | Registro de actividad |
+
+Para reiniciar la base de datos durante el desarrollo, desinstala la app del emulador o borra sus datos.
 
 ---
 
@@ -130,37 +159,69 @@ MotorCore-Garage/
 ├── .gitignore                       Archivos generados e IDE excluidos de git
 ├── MotorCore_Garage.slnx            Solución
 ├── README.md
-├── .vscode/settings.json            Configuración de VS Code (solución por defecto)
+├── schema/
+│   └── MotorCodeGarageDB.sql        Esquema SQLite de la base de datos local
+├── .vscode/settings.json            Configuración de VS Code
 └── MotorCore_Garage/
-    ├── App.xaml / App.xaml.cs       Punto de entrada; carga de recursos globales
+    ├── App.xaml / App.xaml.cs       Punto de entrada (arranca con Splash)
     ├── AppShell.xaml / .cs          Shell: pestañas y registro de rutas
     ├── MauiProgram.cs               Configuración de la app y fuentes
-    ├── MotorCore_Garage.csproj      Proyecto MAUI (targets, versiones, íconos, fuentes)
+    ├── MotorCore_Garage.csproj      Proyecto MAUI (targets, versiones, paquetes)
     ├── Models/
-    │   └── DatosDemo.cs             Modelos (Vehiculo, Alerta, Orden, Componente) y datos de demo
+    │   └── Modelos.cs               Entidades de la base de datos y modelos de presentación
+    ├── Services/
+    │   ├── Db.cs                    Conexión SQLite y creación de tablas
+    │   ├── Seguridad.cs             Hash y verificación de contraseñas
+    │   ├── Taller.cs                Lógica de negocio y acceso a datos
+    │   └── Ui.cs                    Chips, colores de desgaste y avisos
     ├── Pages/
-    │   ├── InicioPage               Resumen de la flota
+    │   ├── SplashPage               Arranque; decide entre registro e inicio de sesión
+    │   ├── RegistroPage             Registro inicial del taller
+    │   ├── LoginPage                Inicio de sesión
+    │   ├── InicioPage               Resumen del día y acciones rápidas
     │   ├── VehiculosPage            Listado de vehículos
-    │   ├── DetallePage              Detalle de un vehículo (ruta "detalle")
-    │   ├── OrdenesPage              Órdenes de trabajo
-    │   ├── AlertasPage              Alertas predictivas
+    │   ├── ExpedientePage           Detalle y estado de un vehículo
+    │   ├── ClientesPage             Listado y búsqueda de clientes
+    │   ├── ClienteDetallePage       Detalle de un cliente
+    │   ├── NuevoClientePage         Alta de cliente
+    │   ├── NuevoVehiculoPage        Alta de vehículo
+    │   ├── RegistrarServicioPage    Registro de servicio realizado
+    │   ├── RegistrarKmPage          Registro de kilometraje
+    │   ├── AgendaPage               Agenda semanal
+    │   ├── NuevaCitaPage            Programar cita
+    │   ├── RecepcionPage            Recepción de vehículo y cambio de estado
+    │   ├── AlertasPage              Alertas de mantenimiento
+    │   ├── ReportesPage             Reportes (solo administrador)
+    │   ├── MasPage                  Configuración, bitácora y cierre de sesión
     │   └── Vistas.cs                Constructores de tarjetas reutilizables
     ├── Resources/
-    │   ├── Colors.xaml              Paleta de colores
+    │   ├── Styles/Colors.xaml       Paleta de colores
     │   ├── Styles/Styles.xaml       Estilos implícitos por tipo de control (modo claro/oscuro)
     │   ├── Styles/Componentes.xaml  Estilos con nombre (tipografía, tarjetas, botones, páginas)
     │   ├── Fonts/                   Open Sans
-    │   ├── AppIcon/ y Splash/       Ícono y pantalla de inicio (SVG)
-    │   └── Images/, Raw/            Recursos adicionales
+    │   └── AppIcon/, Splash/, Images/, Raw/
     └── Platforms/                   Código específico: Android, iOS, MacCatalyst, Windows
 ```
 
 ### Convenciones
 
-- **Modelos** en `Models/`; **páginas** en `Pages/` con su par `.xaml` / `.xaml.cs`.
-- Las tarjetas que se repiten se construyen con métodos estáticos en `Vistas.cs` en lugar de duplicar XAML.
-- Los estilos de texto y contenedores se referencian por nombre (`Style="{StaticResource Titulo}"`); no usar colores ni tamaños fijos en las páginas.
+- **Entidades** en `Models/Modelos.cs` con atributos de sqlite-net; **páginas** en `Pages/` con su par `.xaml` / `.xaml.cs`.
+- Toda escritura pasa por `Taller` (que guarda en SQLite y actualiza la memoria); las páginas no usan `Db` directamente.
+- Las tarjetas que se repiten se construyen con métodos estáticos en `Vistas.cs`.
+- Los estilos se referencian por nombre (`Style="{StaticResource Titulo}"`); no usar colores ni tamaños fijos en las páginas.
 - Las pantallas se navegan con `Shell.Current.GoToAsync`; los parámetros se pasan con `[QueryProperty]`.
+
+---
+
+## Cálculo de desgaste y alertas
+
+Cada componente del catálogo tiene un intervalo en km (por ejemplo, aceite cada 5 000 km). Para cada vehículo se guarda el kilometraje del último servicio de cada componente.
+
+- **Usado** = kilometraje actual − kilometraje del último servicio del componente.
+- **Restante** = intervalo − usado.
+- **Estado:** *Buen estado* si el restante es ≥ 1 000 km; *Próximo* si queda menos de 1 000 km; *Vencido* si ya se pasó el intervalo.
+- Al **registrar un vehículo** se asume que sus componentes están revisados en su kilometraje actual. Al **registrar un servicio**, los componentes atendidos reinician su contador en el kilometraje de ese servicio.
+- **Alertas:** se generan por cada componente *Próximo* o *Vencido*. La fecha estimada usa un ritmo de 50 km diarios.
 
 ---
 
@@ -170,15 +231,12 @@ MotorCore-Garage/
 
 | Token | Valor | Uso |
 |---|---|---|
-| `Primary` | `#512BD4` | Color principal, pestañas, botones |
-| `Secondary` | `#DFD8F7` | Fondos de acento |
-| `Tertiary` | `#2B0B98` | Títulos de recomendación |
-| `Success` | `#1E9E5A` | Estado correcto / al día |
-| `Warning` | `#E8A317` | Atención |
-| `Danger` | `#D93025` | Crítico / prioridad alta |
-| `Gray100`–`Gray950` | escala de grises | Fondos, bordes y texto |
+| `Primary` | `#E8701A` | Color principal, botones y pestañas |
+| `Graphite` | gris oscuro | Cabeceras de página |
+| `WearOk` / `WearSoon` / `WearDue` | verde / ámbar / rojo | Estado de desgaste: buen estado, próximo, vencido |
+| `Ink` / `InkMuted` | texto principal / secundario | Tipografía |
 
-Los estilos de `Styles.xaml` respetan el modo claro y oscuro del sistema mediante `AppThemeBinding`.
+Los estilos respetan el modo claro y oscuro del sistema mediante `AppThemeBinding`.
 
 ### Estilos principales (`Componentes.xaml`)
 
@@ -186,43 +244,35 @@ Los estilos de `Styles.xaml` respetan el modo claro y oscuro del sistema mediant
 |---|---|
 | `Display`, `Titulo`, `Seccion` | Encabezados |
 | `CuerpoStrong`, `Cuerpo`, `Pie`, `Etiqueta` | Texto de cuerpo, secundario y etiquetas |
-| `Tarjeta`, `Chip` | Contenedores |
-| `BotonPrimario` | Botón de acción principal |
+| `Tarjeta`, `Chip`, `Campo` | Contenedores y campos de formulario |
+| `BotonPrimario`, `BotonSecundario` | Botones de acción |
 | `Pagina` | Fondo y barra de navegación de cada página |
-
----
-
-## Datos de demostración
-
-Actualmente la app usa datos fijos definidos en `Models/DatosDemo.cs`:
-
-- **4 vehículos** (Hilux, Ranger, Frontier, S10) con kilometraje y salud.
-- **3 alertas** predictivas (frenos, aceite, batería).
-- **4 órdenes de trabajo** (OT-1039 a OT-1042).
-- **4 componentes** con porcentaje de vida útil.
-
-Algunos textos de las pantallas están escritos directamente en el XAML (por ejemplo, la salud global "86%" en Inicio). Al conectar una fuente de datos real, estos valores deben enlazarse al modelo.
 
 ---
 
 ## Estado actual y hoja de ruta
 
 ### Implementado
-- [x] Navegación por pestañas (Shell) y ruta de detalle.
-- [x] Pantallas: Inicio, Vehículos, Detalle, Órdenes y Alertas.
+- [x] Registro inicial del taller y cuenta de administrador.
+- [x] Inicio de sesión con contraseñas protegidas (PBKDF2).
+- [x] Base de datos SQLite local con las tablas descritas arriba.
+- [x] Alta de clientes, vehículos y servicios; registro de kilometraje.
+- [x] Cálculo de desgaste por componente y alertas.
+- [x] Agenda, nueva cita y recepción de vehículos.
+- [x] Configuración de bahías e intervalos, bitácora y cierre de sesión.
 - [x] Sistema de estilos con soporte de modo claro y oscuro.
 - [x] Compilación para Android verificada.
 
 ### Pendiente
-- [ ] Persistencia de datos (base de datos local o API).
-- [ ] Lógica de predicción de desgaste real (hoy los porcentajes son fijos).
-- [ ] Acción **Programar servicio** (botones en Inicio y Detalle).
-- [ ] Filtros por estado y búsqueda en Vehículos.
-- [ ] Pestañas de estado en Órdenes.
-- [ ] Enlazar textos fijos de las pantallas al modelo (salud global, próximos servicios, recomendaciones, técnico asignado).
-- [ ] Refactor a MVVM (ViewModels con enlace de datos) y separar la presentación de `DatosDemo`.
-- [ ] Proyecto de pruebas unitarias para los modelos y la lógica de predicción.
-- [ ] Capturas de pantalla y guía de contribución.
+- [ ] Alta y gestión de cuentas de mecánicos (hoy solo existe el administrador inicial).
+- [ ] Probar el flujo completo en dispositivo (registro, login, cliente, vehículo, servicio).
+- [ ] Respaldo y restauración de la base de datos (hoy el respaldo es un JSON de lectura).
+- [ ] Mantener la cabecera visible cuando se abre el teclado en formularios.
+- [ ] Pestañas de estado y órdenes de trabajo.
+- [ ] Reportes con datos reales.
+- [ ] Sincronización con un servidor (opcional, para varios equipos).
+- [ ] Proyecto de pruebas unitarias para `Taller` y el cálculo de desgaste.
+- [ ] Capturas de pantalla en `docs/img/`.
 
 ---
 
@@ -230,9 +280,10 @@ Algunos textos de las pantallas están escritos directamente en el XAML (por eje
 
 1. Crea una rama desde `main`: `git checkout -b feature/nombre-del-cambio`.
 2. Haz tus cambios y verifica que el proyecto compila (`dotnet build -f net10.0-android`).
-3. Confirma con mensajes de commit claros y abre un Pull Request hacia `main`.
+3. Si cambias una entidad, actualiza también `schema/MotorCodeGarageDB.sql`.
+4. Confirma con mensajes de commit claros y abre un Pull Request hacia `main`.
 
-No subas archivos generados (`bin/`, `obj/`), claves de firma (`*.keystore`, `*.jks`) ni credenciales; el `.gitignore` ya los excluye.
+No subas archivos generados (`bin/`, `obj/`), claves de firma (`*.keystore`, `*.jks`), bases de datos locales (`*.db3`) ni credenciales; el `.gitignore` ya excluye los generados.
 
 ---
 

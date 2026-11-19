@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MotorCore_Garage.Pages.ExpedientePage"
+             Title="Expediente"
+             Style="{StaticResource Pagina}">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <Grid Grid.Row="0" BackgroundColor="{StaticResource Graphite}" Padding="8,44,16,12" ColumnDefinitions="Auto,*">
+            <Button Text="‹" FontSize="24" BackgroundColor="Transparent" TextColor="{StaticResource White}"
+                    WidthRequest="48" HeightRequest="48" Padding="0" Clicked="OnVolver" />
+            <Label Grid.Column="1" Text="Expediente del vehículo" Style="{StaticResource Seccion}" TextColor="{StaticResource White}" VerticalOptions="Center" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,16,16,24" Spacing="16">
+
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label x:Name="Titulo" Style="{StaticResource Titulo}" />
+                        <Label x:Name="Placa" Style="{StaticResource Etiqueta}" />
+                        <Label x:Name="Vin" Style="{StaticResource Pie}" />
+                        <Label x:Name="Km" Style="{StaticResource CuerpoStrong}" />
+                        <Label x:Name="Propietario" Style="{StaticResource Cuerpo}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button x:Name="BotonKm" Text="Registrar kilometraje" Style="{StaticResource BotonPrimario}" Clicked="OnKilometraje" />
+                <Button x:Name="BotonServicio" Text="Registrar servicio" Style="{StaticResource BotonSecundario}" Clicked="OnServicio" />
+
+                <Label Text="Estado de componentes" Style="{StaticResource Seccion}" />
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout x:Name="Componentes" Spacing="16" />
+                </Border>
+
+                <!-- Pestañas: historial, kilometraje y notas -->
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="6">
+                    <Button x:Name="TabHistorial" Text="Historial" CommandParameter="0" Clicked="OnTab" Style="{StaticResource BotonPrimario}" HeightRequest="44" FontSize="14" />
+                    <Button x:Name="TabKm" Grid.Column="1" Text="Kilometraje" CommandParameter="1" Clicked="OnTab" Style="{StaticResource BotonSecundario}" HeightRequest="44" FontSize="14" />
+                    <Button x:Name="TabNotas" Grid.Column="2" Text="Notas" CommandParameter="2" Clicked="OnTab" Style="{StaticResource BotonSecundario}" HeightRequest="44" FontSize="14" />
+                </Grid>
+
+                <VerticalStackLayout x:Name="PanelHistorial" Spacing="12" />
+
+                <Border x:Name="PanelKm" IsVisible="False" Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Kilometraje en el tiempo" Style="{StaticResource CuerpoStrong}" />
+                        <GraphicsView x:Name="Grafica" HeightRequest="220" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border x:Name="PanelNotas" IsVisible="False" Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Notas del vehículo" Style="{StaticResource CuerpoStrong}" />
+                        <Editor x:Name="Notas" HeightRequest="160" FontSize="16" Unfocused="OnNotas" />
+                        <Label Text="Se guardan al salir del campo" Style="{StaticResource Pie}" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

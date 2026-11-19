@@ -5,46 +5,68 @@
              Title="Inicio"
              Style="{StaticResource Pagina}">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="24,48,24,24" Spacing="16">
+    <Grid RowDefinitions="Auto,*">
 
-            <Label Text="Buen día, Taller Central" Style="{StaticResource Pie}" />
-            <Label Text="Inicio" Style="{StaticResource Titulo}" />
-
-            <Border BackgroundColor="{StaticResource Primary}"
-                    Padding="20" StrokeThickness="0"
-                    StrokeShape="RoundRectangle 20">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="Salud de la flota" Style="{StaticResource Pie}" TextColor="{StaticResource White}" />
-                    <Label Text="86%" Style="{StaticResource Display}" />
-                    <Label Text="12 vehículos · 3 requieren atención" FontSize="15" TextColor="{StaticResource Secondary}" />
-                    <ProgressBar Progress="0.86"
-                                 ProgressColor="{StaticResource White}"
-                                 HeightRequest="8" Margin="0,4,0,0" />
-                </VerticalStackLayout>
+        <!-- Barra superior con indicador de modo local -->
+        <Grid Grid.Row="0" BackgroundColor="{StaticResource Graphite}" Padding="16,44,16,12" ColumnDefinitions="*,Auto">
+            <Label x:Name="Encabezado" Text="MotorCode Garage" Style="{StaticResource Seccion}" TextColor="{StaticResource White}" VerticalOptions="Center" />
+            <Border Grid.Column="1" BackgroundColor="{StaticResource Card}" Style="{StaticResource Chip}" VerticalOptions="Center">
+                <Label Text="☁ Modo local" FontFamily="OpenSansSemibold" FontSize="12" TextColor="{StaticResource Ink}" />
             </Border>
+        </Grid>
 
-            <Label Text="Alertas predictivas" Style="{StaticResource Seccion}" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,16,16,96" Spacing="16">
 
-            <VerticalStackLayout x:Name="ListaAlertas" Spacing="12" />
+                <Label x:Name="Saludo" Style="{StaticResource Pie}" FontSize="14" />
+                <Label x:Name="Fecha" Style="{StaticResource Titulo}" />
 
-            <Label Text="Próximos servicios" Style="{StaticResource Seccion}" />
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="8" RowDefinitions="Auto,Auto" RowSpacing="8">
+                    <Border Style="{StaticResource Tarjeta}" Padding="12">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Citas de hoy" Style="{StaticResource Etiqueta}" />
+                            <Label x:Name="CitasHoy" Style="{StaticResource Titulo}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1" Style="{StaticResource Tarjeta}" Padding="12">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Vehículos en taller" Style="{StaticResource Etiqueta}" />
+                            <Label x:Name="EnTaller" Style="{StaticResource Titulo}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Row="1" Style="{StaticResource Tarjeta}" Padding="12">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Alertas urgentes" Style="{StaticResource Etiqueta}" />
+                            <Label x:Name="Urgentes" Style="{StaticResource Titulo}" TextColor="{StaticResource WearDue}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource Tarjeta}" Padding="12">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Bahías ocupadas" Style="{StaticResource Etiqueta}" />
+                            <Label x:Name="Bahias" Style="{StaticResource Titulo}" />
+                            <ProgressBar x:Name="BarraBahias" ProgressColor="{StaticResource Primary}" HeightRequest="8" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
 
-            <Border Style="{StaticResource Tarjeta}">
-                <VerticalStackLayout Spacing="4">
-                    <Label Text="Cambio de aceite · Hilux" Style="{StaticResource CuerpoStrong}" />
-                    <Label Text="Mañana, 09:00" Style="{StaticResource Pie}" />
-                </VerticalStackLayout>
-            </Border>
+                <Label Text="Próximas citas" Style="{StaticResource Seccion}" />
+                <VerticalStackLayout x:Name="ListaCitas" Spacing="12" />
 
-            <Border Style="{StaticResource Tarjeta}">
-                <VerticalStackLayout Spacing="4">
-                    <Label Text="Revisión general · Ranger" Style="{StaticResource CuerpoStrong}" />
-                    <Label Text="Vie 14, 11:30" Style="{StaticResource Pie}" />
-                </VerticalStackLayout>
-            </Border>
+                <Label Text="Alertas de mantenimiento" Style="{StaticResource Seccion}" />
+                <VerticalStackLayout x:Name="ListaAlertas" Spacing="12" />
+            </VerticalStackLayout>
+        </ScrollView>
 
-            <Button Text="Programar servicio" Style="{StaticResource BotonPrimario}" Margin="0,8,0,0" />
-        </VerticalStackLayout>
-    </ScrollView>
+        <Button Grid.Row="1" Text="+" FontSize="28" FontFamily="OpenSansSemibold"
+                BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource White}"
+                CornerRadius="16" WidthRequest="56" HeightRequest="56" Padding="0"
+                HorizontalOptions="End" VerticalOptions="End" Margin="16"
+                Clicked="OnFab" />
+
+        <Border Grid.Row="1" x:Name="Snack" IsVisible="False" BackgroundColor="{StaticResource Graphite}"
+                StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="16,12"
+                Margin="16" VerticalOptions="End">
+            <Label x:Name="SnackTexto" TextColor="{StaticResource White}" FontSize="14" />
+        </Border>
+    </Grid>
 </ContentPage>

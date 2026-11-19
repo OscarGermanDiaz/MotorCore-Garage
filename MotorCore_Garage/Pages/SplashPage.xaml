@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MotorCore_Garage.Pages.SplashPage"
+             BackgroundColor="{StaticResource Graphite}"
+             NavigationPage.HasNavigationBar="False">
+
+    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="16">
+        <GraphicsView x:Name="Logo" WidthRequest="128" HeightRequest="128" />
+        <Label Text="MotorCode Garage" Style="{StaticResource Display}" HorizontalTextAlignment="Center" />
+        <Label Text="Taller mecánico · Modo local" FontSize="14"
+               TextColor="{StaticResource InkDark}" HorizontalTextAlignment="Center" />
+    </VerticalStackLayout>
+</ContentPage>

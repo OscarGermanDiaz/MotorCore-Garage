@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mdi="clr-namespace:MauiIcons.Material;assembly=MauiIcons.Material"
+             xmlns:fab="clr-namespace:MauiIcons.FontAwesome.Brand;assembly=MauiIcons.FontAwesome.Brand"
+             x:Class="MotorCore_Garage.Pages.LoginPage"
+             Style="{StaticResource Pagina}"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+
+            <VerticalStackLayout BackgroundColor="{StaticResource Graphite}" Padding="24,72,24,44" Spacing="6">
+                <Image x:Name="Logo" Source="logo.svg" HeightRequest="72" WidthRequest="72" HorizontalOptions="Start" Margin="0,0,0,12" />
+                <Label x:Name="Encabezado" Text="MotorCode Garage" FontFamily="OpenSansSemibold" FontSize="26" TextColor="{StaticResource White}" />
+                <Label Text="Inicia sesión para continuar" FontSize="15" TextColor="#C9CDD1" />
+            </VerticalStackLayout>
+
+            <Border Style="{StaticResource Tarjeta}" Margin="16,20,16,24" Padding="20">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Usuario" Style="{StaticResource Etiqueta}" />
+                    <Entry x:Name="Usuario" Style="{StaticResource Campo}" Placeholder="Tu usuario" ReturnType="Next" />
+
+                    <Label Text="Contraseña" Style="{StaticResource Etiqueta}" />
+                    <Entry x:Name="Contrasena" Style="{StaticResource Campo}" Placeholder="Tu contraseña"
+                           IsPassword="True" ReturnType="Done" Completed="OnEntrar" />
+
+                    <HorizontalStackLayout Spacing="12">
+                        <CheckBox CheckedChanged="OnMostrarChanged" Color="{StaticResource Primary}" />
+                        <Label Text="Mostrar contraseña" VerticalTextAlignment="Center" />
+                    </HorizontalStackLayout>
+
+                    <Label x:Name="Error" TextColor="{StaticResource WearDue}" FontSize="14" IsVisible="False" />
+
+                    <Button Text="Entrar" Style="{StaticResource BotonPrimario}" Clicked="OnEntrar" Margin="0,4,0,0" />
+
+                    <Label Text="¿Quieres una cita?" Style="{StaticResource Pie}" HorizontalTextAlignment="Center" Margin="0,8,0,0" />
+                    <Button Text="Agendar cita por WhatsApp" Style="{StaticResource BotonSecundario}" Clicked="OnAgendarWhatsApp"
+                            ImageSource="{fab:FontAwesomeBrand Icon=Whatsapp, IconColor=#E8701A, IconSize=20}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Datos guardados en este teléfono · Modo sin conexión"
+                   Style="{StaticResource Pie}" HorizontalTextAlignment="Center" Margin="16,0,16,32" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

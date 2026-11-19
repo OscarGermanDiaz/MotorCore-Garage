@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MotorCore_Garage.Pages.MasPage"
+             Title="Más"
+             Style="{StaticResource Pagina}">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <Grid Grid.Row="0" BackgroundColor="{StaticResource Graphite}" Padding="16,44,16,12" ColumnDefinitions="*,Auto">
+            <Label Text="Más y ajustes" Style="{StaticResource Seccion}" TextColor="{StaticResource White}" VerticalOptions="Center" />
+            <Border Grid.Column="1" BackgroundColor="{StaticResource Card}" Style="{StaticResource Chip}" VerticalOptions="Center">
+                <Label Text="☁ Modo local" FontFamily="OpenSansSemibold" FontSize="12" TextColor="{StaticResource Ink}" />
+            </Border>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,16,16,96" Spacing="16">
+
+                <!-- Perfil -->
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="2">
+                        <Label x:Name="Usuario" Style="{StaticResource Seccion}" />
+                        <Label x:Name="Rol" Style="{StaticResource Pie}" FontSize="14" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Accesos -->
+                <Border Style="{StaticResource Tarjeta}" Padding="0">
+                    <VerticalStackLayout>
+                        <Button Text="Clientes" Style="{StaticResource BotonSecundario}" BorderWidth="0" Clicked="OnClientes" />
+                        <Button x:Name="BotonReportes" Text="Reportes y métricas" Style="{StaticResource BotonSecundario}" BorderWidth="0" Clicked="OnReportes" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Bahías -->
+                <Label Text="Taller" Style="{StaticResource Seccion}" />
+                <Border Style="{StaticResource Tarjeta}">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <VerticalStackLayout VerticalOptions="Center">
+                            <Label Text="Número de bahías" Style="{StaticResource CuerpoStrong}" />
+                            <Label x:Name="TextoBahias" Style="{StaticResource Pie}" />
+                        </VerticalStackLayout>
+                        <Stepper Grid.Column="1" x:Name="Bahias" Minimum="1" Maximum="10" Increment="1" ValueChanged="OnBahias" />
+                    </Grid>
+                </Border>
+
+                <!-- Catálogo de intervalos -->
+                <Label Text="Catálogo de intervalos (km)" Style="{StaticResource Seccion}" />
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout x:Name="Catalogo" Spacing="12" />
+                </Border>
+
+                <!-- Usuarios -->
+                <Label x:Name="TituloUsuarios" Text="Usuarios" Style="{StaticResource Seccion}" />
+                <Border x:Name="PanelUsuarios" Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="admin · Administrador" Style="{StaticResource Cuerpo}" />
+                        <Label Text="mecanico · Mecánico" Style="{StaticResource Cuerpo}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Respaldo y sesión -->
+                <Label Text="Datos" Style="{StaticResource Seccion}" />
+                <Border Style="{StaticResource Tarjeta}" Padding="0">
+                    <VerticalStackLayout>
+                        <Button Text="Respaldar base de datos local" Style="{StaticResource BotonSecundario}" BorderWidth="0" Clicked="OnRespaldo" />
+                        <Button Text="Cerrar sesión" Style="{StaticResource BotonSecundario}" BorderWidth="0"
+                                TextColor="{StaticResource WearDue}" Clicked="OnCerrarSesion" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

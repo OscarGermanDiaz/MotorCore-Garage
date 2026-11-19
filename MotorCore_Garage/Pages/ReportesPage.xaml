@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MotorCore_Garage.Pages.ReportesPage"
+             Title="Reportes"
+             Style="{StaticResource Pagina}">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <Grid Grid.Row="0" BackgroundColor="{StaticResource Graphite}" Padding="8,44,16,12" ColumnDefinitions="Auto,*">
+            <Button Text="‹" FontSize="24" BackgroundColor="Transparent" TextColor="{StaticResource White}"
+                    WidthRequest="48" HeightRequest="48" Padding="0" Clicked="OnVolver" />
+            <Label Grid.Column="1" Text="Reportes y métricas" Style="{StaticResource Seccion}" TextColor="{StaticResource White}" VerticalOptions="Center" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,16,16,24" Spacing="16">
+
+                <Label x:Name="SinAcceso" Text="Esta sección es solo para el administrador"
+                       Style="{StaticResource Pie}" IsVisible="False" />
+
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Servicios preventivos por mes" Style="{StaticResource CuerpoStrong}" />
+                        <GraphicsView x:Name="GraficaServicios" HeightRequest="200" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Horas administrativas por semana" Style="{StaticResource CuerpoStrong}" />
+                        <Label x:Name="MetaHoras" Style="{StaticResource Pie}" />
+                        <GraphicsView x:Name="GraficaHoras" HeightRequest="180" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Ocupación del taller (próximos 7 días)" Style="{StaticResource CuerpoStrong}" />
+                        <VerticalStackLayout x:Name="Ocupacion" Spacing="6" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Servicios más frecuentes" Style="{StaticResource CuerpoStrong}" />
+                        <VerticalStackLayout x:Name="Frecuentes" Spacing="6" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Style="{StaticResource Tarjeta}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Bitácora de actividad" Style="{StaticResource CuerpoStrong}" />
+                        <VerticalStackLayout x:Name="Bitacora" Spacing="6" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

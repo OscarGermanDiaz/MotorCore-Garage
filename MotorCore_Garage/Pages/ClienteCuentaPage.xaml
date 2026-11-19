@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MotorCore_Garage.Pages.ClienteCuentaPage"
+             Style="{StaticResource Pagina}"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+            <VerticalStackLayout BackgroundColor="{StaticResource Graphite}" Padding="24,64,24,28" Spacing="6">
+                <Label Text="Mi cuenta" FontFamily="OpenSansSemibold" FontSize="26" TextColor="{StaticResource White}" />
+                <Label x:Name="NombreDelTaller" FontSize="15" TextColor="#C9CDD1" />
+            </VerticalStackLayout>
+
+            <Border Style="{StaticResource Tarjeta}" Margin="16,20,16,16" Padding="20">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Nombre" Style="{StaticResource Etiqueta}" />
+                    <Label x:Name="Nombre" Style="{StaticResource CuerpoStrong}" />
+                    <Label Text="Teléfono" Style="{StaticResource Etiqueta}" />
+                    <Label x:Name="Telefono" Style="{StaticResource Cuerpo}" />
+                    <Label Text="Usuario" Style="{StaticResource Etiqueta}" />
+                    <Label x:Name="Usuario" Style="{StaticResource Cuerpo}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Button Text="Cerrar sesión" Style="{StaticResource BotonSecundario}" Clicked="OnCerrarSesion" Margin="16,0,16,32" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

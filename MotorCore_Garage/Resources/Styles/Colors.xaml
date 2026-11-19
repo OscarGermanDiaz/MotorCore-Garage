@@ -1,13 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ResourceDictionary 
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
-    <Color x:Key="Primary">#512BD4</Color>
-    <Color x:Key="PrimaryDark">#ac99ea</Color>
-    <Color x:Key="PrimaryDarkText">#242424</Color>
+    <!-- Marca: naranja de acento sobre base grafito -->
+    <Color x:Key="Primary">#E8701A</Color>
+    <Color x:Key="PrimaryDark">#FF9A4D</Color>
+    <Color x:Key="PrimaryDarkText">#1A1A1A</Color>
+    <Color x:Key="PrimaryContainer">#FDE7D4</Color>
+    <Color x:Key="PrimaryContainerDark">#4A2A12</Color>
+    <Color x:Key="Graphite">#2F3437</Color>
+    <Color x:Key="GraphiteDark">#0F1113</Color>
+
     <Color x:Key="Secondary">#DFD8F7</Color>
     <Color x:Key="SecondaryDarkText">#9880e5</Color>
     <Color x:Key="Tertiary">#2B0B98</Color>
@@ -18,6 +24,26 @@
     <Color x:Key="MidnightBlue">#190649</Color>
     <Color x:Key="OffBlack">#1f1f1f</Color>
 
+    <!-- Superficies y texto (modo claro / oscuro) -->
+    <Color x:Key="Surface">#F5F6F7</Color>
+    <Color x:Key="SurfaceDark">#17191B</Color>
+    <Color x:Key="Card">#FFFFFF</Color>
+    <Color x:Key="CardDark">#23262A</Color>
+    <Color x:Key="Ink">#1B1F22</Color>
+    <Color x:Key="InkDark">#EDEFF1</Color>
+    <Color x:Key="InkMuted">#5B6268</Color>
+    <Color x:Key="InkMutedDark">#A7AEB5</Color>
+    <Color x:Key="Outline">#D0D4D8</Color>
+    <Color x:Key="OutlineDark">#3A3F45</Color>
+
+    <!-- Código de desgaste: siempre acompañado de ícono y texto -->
+    <Color x:Key="WearOk">#2E7D32</Color>
+    <Color x:Key="WearOkDark">#66BB6A</Color>
+    <Color x:Key="WearSoon">#F2B134</Color>
+    <Color x:Key="WearSoonDark">#F6C343</Color>
+    <Color x:Key="WearDue">#C62828</Color>
+    <Color x:Key="WearDueDark">#FF6B6B</Color>
+
     <Color x:Key="Gray100">#E1E1E1</Color>
     <Color x:Key="Gray200">#C8C8C8</Color>
     <Color x:Key="Gray300">#ACACAC</Color>
@@ -26,10 +52,6 @@
     <Color x:Key="Gray600">#404040</Color>
     <Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
-
-    <Color x:Key="Success">#1E9E5A</Color>
-    <Color x:Key="Warning">#E8A317</Color>
-    <Color x:Key="Danger">#D93025</Color>
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>

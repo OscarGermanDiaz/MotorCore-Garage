@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MotorCore_Garage.Pages.NuevoClientePage"
+             Title="Nuevo cliente"
+             Style="{StaticResource Pagina}">
+
+    <Grid RowDefinitions="Auto,*">
+        <Grid Grid.Row="0" BackgroundColor="{StaticResource Graphite}" Padding="8,44,16,12" ColumnDefinitions="Auto,*">
+            <Button Text="‹" FontSize="24" BackgroundColor="Transparent" TextColor="{StaticResource White}"
+                    WidthRequest="48" HeightRequest="48" Padding="0" Clicked="OnVolver" />
+            <Label Grid.Column="1" Text="Nuevo cliente" Style="{StaticResource Seccion}" TextColor="{StaticResource White}" VerticalOptions="Center" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,16,16,24" Spacing="12">
+                <Border Style="{StaticResource Tarjeta}" Padding="16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Datos del cliente" Style="{StaticResource CuerpoStrong}" />
+
+                        <Label Text="Nombre completo" Style="{StaticResource Etiqueta}" />
+                        <Entry x:Name="Nombre" Style="{StaticResource Campo}" Placeholder="Ej. Jorge Ramírez López" ReturnType="Next" />
+
+                        <Label Text="Teléfono (10 dígitos)" Style="{StaticResource Etiqueta}" />
+                        <Entry x:Name="Telefono" Style="{StaticResource Campo}" Placeholder="5512345678"
+                               Keyboard="Telephone" MaxLength="16" ReturnType="Done" />
+
+                        <Label x:Name="Error" TextColor="{StaticResource WearDue}" FontSize="14" IsVisible="False" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="Después podrás registrar sus vehículos." Style="{StaticResource Pie}" />
+                <Button Text="Guardar cliente" Style="{StaticResource BotonPrimario}" Clicked="OnGuardar" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
